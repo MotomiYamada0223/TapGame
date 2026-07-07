@@ -153,6 +153,12 @@ public class CircleController : MonoBehaviour
                 SpawnerManager.Instance.HandleCircleDestroyed();
             }
 
+            // 音声マネージャーが存在する場合は、風船が割れるSEを再生する。
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySeTap();
+            }
+
             // タップ成功時のパーティクルエフェクトが設定されていれば生成する。
             if (tapEffectPrefab != null)
             {

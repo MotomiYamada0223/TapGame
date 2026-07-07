@@ -17,6 +17,12 @@ public class TitleManager : MonoBehaviour
     /// </summary>
     public void OnStartButtonClicked()
     {
+        // 音声マネージャーが存在する場合は、ボタン押下時のSEを再生する。
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySeTap();
+        }
+
         // SceneTransitionManager が存在すればフェード付きの上品な遷移を行う。
         // 存在しない場合（直接このシーンを開いてテストしているときなど）は
         // SceneManager で即時ロードするフォールバックを設けることで、

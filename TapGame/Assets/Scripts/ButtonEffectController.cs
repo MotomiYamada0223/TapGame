@@ -62,6 +62,14 @@ public class ButtonEffectController : MonoBehaviour
                 buttonComponent.interactable = false;
             }
 
+            // ボタンの子オブジェクトにあるテキストも即座に非表示にする
+            TMPro.TextMeshProUGUI buttonText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                buttonText.enabled = false;
+            }
+
+
             // フェードアウトコルーチンを開始する
             StartCoroutine(AnimateBurstEffect(transform.position, buttonSize));
         }

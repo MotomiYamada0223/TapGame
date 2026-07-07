@@ -55,6 +55,12 @@ public class ResultManager : MonoBehaviour
     /// </summary>
     public void OnBackToTitleButtonClicked()
     {
+        // 音声マネージャーが存在する場合は、ボタン押下時のSEを再生する。
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySeTap();
+        }
+
         // GameManager がゲーム終了時に timeScale を 0 にしているため、ここで 1 に戻す。
         // このリセットを忘れると、タイトルや次のゲームシーンでも時間が止まったままになる。
         Time.timeScale = 1f;

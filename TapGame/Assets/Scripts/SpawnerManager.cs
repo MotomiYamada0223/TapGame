@@ -24,12 +24,6 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private float spawnPaddingRatio = 0.2f;
 
     [Header("難易度調整パラメータ")]
-    // ゲーム開始時の円の出現間隔（秒）。
-    [SerializeField] private float initialSpawnInterval = 3.0f;
-    // 最小の出現間隔（秒）（これ以上は早くならない）。
-    [SerializeField] private float minimumSpawnInterval = 0.8f;
-    // 1秒経過するごとに出現間隔がどれくらい短縮されるか（秒/秒）。
-    [SerializeField] private float spawnIntervalDecreaseRate = 0.05f;
 
     // ゲーム開始時の円の寿命（秒）。
     [SerializeField] private float initialCircleLifetime = 3.0f;
