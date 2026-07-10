@@ -21,12 +21,41 @@ public class ButtonEffectController : MonoBehaviour
     // 破裂画像のサイズをエディター側で調整するための変数を設定します
     [SerializeField] private Vector3 burstSize = new Vector3(100f, 100f, 1f);
 
+    [Header("Floating Animation")]
+    [SerializeField] private bool enableFloating = true;
+    [SerializeField] private float floatSpeed = 2f;
+    [SerializeField] private float floatAmplitude = 10f;
+
+    private RectTransform rectTransform;
+    private Vector2 initialAnchoredPosition;
+    private bool isClicked = false;
+
+    private void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            initialAnchoredPosition = rectTransform.anchoredPosition;
+        }
+    }
+
+    private void Update()
+    {
+        if (enableFloating && rectTransform != null && !isClicked)
+        {
+            float newY = initialAnchoredPosition.y + Mathf.Sin(Time.unscaledTime * floatSpeed) * floatAmplitude;
+            rectTransform.anchoredPosition = new Vector2(initialAnchoredPosition.x, newY);
+        }
+    }
+
     /// <summary>
     /// ボタンがクリックされたときに呼び出すメソッド。
     /// パーティクルを生成し、破裂画像のフェードアウトアニメーションを開始する。
     /// </summary>
     public void OnButtonClick()
     {
+        isClicked = true;
+
         // 1. パーティクルプレハブが設定されているか確認して生成する
         if (particlePrefab != null)
         {

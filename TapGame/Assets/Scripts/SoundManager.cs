@@ -23,6 +23,9 @@ public class SoundManager : MonoBehaviour
     // 風船をタップして割った際のSEクリップ。
     [SerializeField] private AudioClip seTap;
 
+    // ゲーム終了時（タイムアップ）に再生するホイッスルのSEクリップ。
+    [SerializeField] private AudioClip seWhistle;
+
     private void Awake()
     {
         // シングルトンの重複防止処理。
@@ -78,6 +81,17 @@ public class SoundManager : MonoBehaviour
         if (seSource != null && seTap != null)
         {
             seSource.PlayOneShot(seTap);
+        }
+    }
+
+    /// <summary>
+    /// ゲーム終了時（タイムアップ）のホイッスルSEを再生する。
+    /// </summary>
+    public void PlaySeWhistle()
+    {
+        if (seSource != null && seWhistle != null)
+        {
+            seSource.PlayOneShot(seWhistle);
         }
     }
 }

@@ -34,6 +34,13 @@ public class CircleController : MonoBehaviour
     private float lifetimeLimit;
     private const float ShrinkThresholdRatio = 0.2f;
 
+    [Header("Floating Animation")]
+    [SerializeField] private bool enableFloating = true;
+    [SerializeField] private float floatSpeed = 2f;
+    [SerializeField] private float floatAmplitude = 0.5f;
+
+    private Vector3 initialPosition;
+
     // 消滅演出がすでに開始しているかどうかのフラグ。
     // 連打などにより1つの円に対して2回タップ処理が走るのを防止する。
     private bool isDisappearing = false;
@@ -50,6 +57,7 @@ public class CircleController : MonoBehaviour
 
     private void Start()
     {
+        initialPosition = transform.position;
         // 生成された直後に、小さなサイズから大きくなる出現アニメーションを開始する。
         StartCoroutine(AnimateAppearance());
     }
@@ -59,6 +67,13 @@ public class CircleController : MonoBehaviour
         // ゲームが一時停止中（timeScale=0）はタップ判定を行わない。
         // 結果画面遷移中に誤って円がタップされるのを防ぐため。
         if (Time.timeScale == 0f) return;
+
+        if (enableFloating && !isDisappearing)
+        {
+            float newY = initialPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        }
+
         HandleTapInput();
     }
 
@@ -183,6 +198,8 @@ public class CircleController : MonoBehaviour
                 // 3. スプライト画像を設定する。
                 SpriteRenderer effectRenderer = burstObject.GetComponent<SpriteRenderer>();
                 effectRenderer.sprite = burstSprite;
+                effectRenderer.sortingLayerID = spriteRenderer.sortingLayerID;
+                effectRenderer.sortingOrder = spriteRenderer.sortingOrder;
 
                 // 4. フェードアウトコンポーネントを初期化して演出を開始する。
                 SpriteFadeOut fadeOutComponent = burstObject.GetComponent<SpriteFadeOut>();

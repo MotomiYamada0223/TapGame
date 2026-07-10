@@ -28,6 +28,7 @@ public class ScoreManager : MonoBehaviour
     // シーン遷移後の ResultManager が参照できるよう static で保持する。
     // DontDestroyOnLoad を使わずにデータを渡すための軽量な手段。
     public static int LastScore { get; private set; }
+    public static bool IsNewHighScore { get; private set; }
 
     private const int InitialValue = 0;
     private const int ComboMultiplierBase = 1;
@@ -250,6 +251,11 @@ public class ScoreManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(HighScoreSaveKey, currentScore);
             PlayerPrefs.Save();
+            IsNewHighScore = true;
+        }
+        else
+        {
+            IsNewHighScore = false;
         }
     }
 

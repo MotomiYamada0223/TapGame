@@ -13,6 +13,13 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentScoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
 
+    [Header("Effects")]
+    // 紙吹雪エフェクトのプレハブ。
+    [SerializeField] private GameObject confettiPrefab;
+
+    // 紙吹雪エフェクトを発生させるスコアの閾値
+    private const int ScoreThresholdForConfetti = 40000;
+
     private const string TitleSceneName = "TitleScene";
 
     private void Start()
@@ -46,6 +53,53 @@ public class ResultManager : MonoBehaviour
         if (highScoreText != null)
         {
             highScoreText.text = $"HIGH SCORE: {highScore}";
+        }
+
+        // 紙吹雪エフェクトの発生条件：ハイスコア更新時、またはスコアが閾値（40000）を超えた時
+        if (ScoreManager.IsNewHighScore || currentScore > ScoreThresholdForConfetti)
+        {
+            if (SceneTransitionManager.Instance != null)
+            {
+                // フェードインを含む遷移が完全に終了したタイミングでエフェクトを再生する
+                SceneTransitionManager.Instance.OnTransitionCompleted += OnTransitionCompleted;
+            }
+            else
+            {
+                // 遷移マネージャーが無い場合（テスト起動時など）は即座に再生
+                PlayConfettiEffect();
+            }
+        }
+    }
+
+    private void OnTransitionCompleted()
+    {
+        if (SceneTransitionManager.Instance != null)
+        {
+            // メモリリークや多重再生を防ぐためにイベントの登録を解除する
+            SceneTransitionManager.Instance.OnTransitionCompleted -= OnTransitionCompleted;
+        }
+        
+        PlayConfettiEffect();
+    }
+
+    /// <summary>
+    /// 紙吹雪エフェクトを画面に生成する。
+    /// </summary>
+    private void PlayConfettiEffect()
+    {
+        if (confettiPrefab != null)
+        {
+            // パーティクルなどのプレハブを生成する。
+            GameObject confetti = Instantiate(confettiPrefab);
+            
+            // リザルト画面では timeScale = 0 になっているため、
+            // パーティクルが Unscaled Time で動くように設定しないと再生が止まってしまう。
+            ParticleSystem[] particleSystems = confetti.GetComponentsInChildren<ParticleSystem>();
+            foreach (var ps in particleSystems)
+            {
+                var main = ps.main;
+                main.useUnscaledTime = true;
+            }
         }
     }
 

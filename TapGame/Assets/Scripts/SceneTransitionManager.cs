@@ -36,6 +36,9 @@ public class SceneTransitionManager : MonoBehaviour
     // フェード中に別のボタンが押されても2重に遷移が始まらないようにするための安全弁。
     private bool isTransitioning = false;
 
+    // フェードインを含むシーン遷移の全てが完了したことを通知するイベント
+    public event System.Action OnTransitionCompleted;
+
     private void Awake()
     {
         // シングルトンとして登録し、シーンをまたいで生存させる。
@@ -118,6 +121,9 @@ public class SceneTransitionManager : MonoBehaviour
         // 遷移が完全に終わったら入力を再び受け付ける。
         fadeImage.raycastTarget = false;
         isTransitioning = false;
+        
+        // 遷移完了を通知
+        OnTransitionCompleted?.Invoke();
     }
 
     /// <summary>

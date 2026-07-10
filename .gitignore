@@ -76,3 +76,47 @@ crashlytics-build.properties
 
 Library/
 Temp/
+
+# === Unity 生成フォルダ・一時ファイル ===
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# === アセット・パッケージキャッシュ ===
+/[Aa]ssets/[Aa]ssetStoreTools*
+.collabignore
+/[Pp]ackages/manifest.json
+
+# === ビルド結果（必要に応じて追加） ===
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.crashlytics
+
+# === Visual Studio / C# 関連 ===
+ExportedObj/
+.vs/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# === その他 OS が勝手に作るファイル ===
+.DS_Store
+Thumbs.db
