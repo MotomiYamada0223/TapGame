@@ -18,7 +18,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private GameObject confettiPrefab;
 
     // 紙吹雪エフェクトを発生させるスコアの閾値
-    private const int ScoreThresholdForConfetti = 40000;
+    private const int ScoreThresholdForConfetti = 23000;
 
     private const string TitleSceneName = "TitleScene";
 
@@ -94,11 +94,12 @@ public class ResultManager : MonoBehaviour
             
             // リザルト画面では timeScale = 0 になっているため、
             // パーティクルが Unscaled Time で動くように設定しないと再生が止まってしまう。
-            ParticleSystem[] particleSystems = confetti.GetComponentsInChildren<ParticleSystem>();
+            ParticleSystem[] particleSystems = confetti.GetComponentsInChildren<ParticleSystem>(true);
             foreach (var ps in particleSystems)
             {
                 var main = ps.main;
                 main.useUnscaledTime = true;
+                ps.Play();
             }
         }
     }

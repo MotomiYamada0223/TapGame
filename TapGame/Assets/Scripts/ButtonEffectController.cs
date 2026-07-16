@@ -62,11 +62,36 @@ public class ButtonEffectController : MonoBehaviour
             // UI Canvasのスケール干渉を防ぐため、親を指定せずにルートに生成する
             GameObject effect = Instantiate(particlePrefab, null);
 
-            // エフェクトの位置をボタンと完全に一致させる
-            effect.transform.position = transform.position;
+            // CanvasがOverlayの場合、transform.positionはスクリーン座標になるため、
+            // そのままワールド空間に配置するとカメラに映らない。
+            // そのため、カメラからの適切な距離のワールド座標に変換する。
+            Vector3 spawnPos = transform.position;
+            Canvas canvas = GetComponentInParent<Canvas>();
+            if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+            {
+                Camera cam = Camera.main;
+                if (cam != null)
+                {
+                    Vector3 screenPos = transform.position;
+                    screenPos.z = 10f; // カメラの前方に配置するための距離
+                    spawnPos = cam.ScreenToWorldPoint(screenPos);
+                }
+            }
+
+            // エフェクトの位置を計算したワールド座標に一致させる
+            effect.transform.position = spawnPos;
 
             // UIのサイズスケールに影響されないようサイズをリセットする
             effect.transform.localScale = Vector3.one;
+
+            // タイムスケールが0の時（リザルト画面など）でもエフェクトが再生されるよう設定
+            ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>(true);
+            foreach (var ps in particleSystems)
+            {
+                var main = ps.main;
+                main.useUnscaledTime = true;
+                ps.Play();
+            }
         }
 
         // 2. 破裂演出用の画像が設定されているか確認する
