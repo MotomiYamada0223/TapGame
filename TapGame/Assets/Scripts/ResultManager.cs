@@ -55,7 +55,7 @@ public class ResultManager : MonoBehaviour
             highScoreText.text = $"HIGH SCORE: {highScore}";
         }
 
-        // 紙吹雪エフェクトの発生条件：ハイスコア更新時、またはスコアが閾値（23000）を超えた時
+        // 紙吹雪エフェクトの発生条件：ハイスコア更新時、またはスコアが閾値（40000）を超えた時
         if (ScoreManager.IsNewHighScore || currentScore > ScoreThresholdForConfetti)
         {
             if (SceneTransitionManager.Instance != null)
