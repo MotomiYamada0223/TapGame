@@ -7,7 +7,7 @@ Library: D:\TapGame\TapGame\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_gener
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---linker-options=PdbAltPath="TapGame_Data/Plugins/x86_64/lib_burst_generated.pdb"
+--linker-options=PdbAltPath="Balloon Tap_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=D:\TapGame\TapGame\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.62f3/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
@@ -54,7 +54,7 @@ Library: D:\TapGame\TapGame\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_gener
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---linker-options=PdbAltPath="TapGame_Data/Plugins/x86_64/lib_burst_generated.pdb"
+--linker-options=PdbAltPath="Balloon Tap_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=D:\TapGame\TapGame\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.62f3/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
